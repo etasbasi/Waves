@@ -1,5 +1,4 @@
 import React from 'react';
-import { MapView } from 'expo';
 
 import {
     Image,
@@ -10,7 +9,8 @@ import {
     TouchableOpacity,
     View,
 } from 'react-native';
-import {WebBrowser} from 'expo';
+import MapView from 'react-native-maps';
+import { WebBrowser } from 'expo';
 
 import {MonoText} from '../components/StyledText';
 

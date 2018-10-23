@@ -53,6 +53,10 @@ SettingsStack.navigationOptions = {
   ),
 };
 
+// export default createBottomTabNavigator({
+//   HomeStack
+// });
+
 export default createBottomTabNavigator({
   HomeStack,
   LinksStack,
