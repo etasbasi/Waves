@@ -1,9 +1,9 @@
 {
-  "devToolsPort": 19002,
+  "expoServerNgrokUrl": "https://v3-jan.enes.waves.exp.direct",
+  "packagerNgrokUrl": "https://packager.v3-jan.enes.waves.exp.direct",
+  "ngrokPid": 4788,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 26736,
-  "expoServerNgrokUrl": "https://3x-8jf.ssaidahmed.waves.exp.direct",
-  "packagerNgrokUrl": "https://packager.3x-8jf.ssaidahmed.waves.exp.direct",
-  "ngrokPid": 26750
+  "packagerPid": 8972,
+  "devToolsPort": 1900
 }
