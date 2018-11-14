@@ -20,17 +20,17 @@ import {
   Permissions,
   Constants
 } from "expo";
-import MapView, { Marker, animateToRegion, Animated } from "react-native-maps";
-
-// import { ThemeContext } from './../constants/theme-context';
-
-const deviceHeight = Dimensions.height;
-const deviceWidth = Dimensions.width;
+import MapView, {
+  Marker,
+  animateToRegion,
+  Animated,
+  Callout
+} from "react-native-maps";
 
 const events = [
   {
-    latitude: 25,
-    longitude: 20,
+    latitude: 39.018,
+    longitude: -76.539,
     name: "Football game"
   },
   {
@@ -74,9 +74,7 @@ export default class HomeScreen extends React.Component {
   }
 
   render() {
-    let theme = this.context;
-    console.log(theme);
-
+    // If the location is still being determined render Fetching Location else render the map
     if (this.state.latitude == null || this.state.longitude == null) {
       return (
         <View style={styles.container}>
@@ -99,6 +97,15 @@ export default class HomeScreen extends React.Component {
               longitudeDelta: 0.0034
             }}
           >
+            <Marker
+              coordinate={{
+                latitude: this.state.latitude,
+                longitude: this.state.longitude,
+                latitudeDelta: 0.0043,
+                longitudeDelta: 0.0034
+              }}
+              title="Your Location"
+            />
             {events.map((event, key) => (
               <Marker
                 draggable
@@ -108,9 +115,11 @@ export default class HomeScreen extends React.Component {
                   longitude: event.longitude
                 }}
               >
-                <View key={key} style={styles.marker}>
-                  <Text>{event.name}</Text>
-                </View>
+                <Callout tooltip={true}>
+                  <View key={key} style={styles.customCallout}>
+                    <Text>{event.name}</Text>
+                  </View>
+                </Callout>
               </Marker>
             ))}
           </MapView>
@@ -198,13 +207,13 @@ const styles = StyleSheet.create({
   map: {
     flex: 1
   },
-  marker: {
-    height: 40,
-    width: 80,
-    borderRadius: 50 / 2,
-    backgroundColor: "rgba(0, 120, 155, 0.2)",
+  customCallout: {
+    height: 50,
+    width: "auto",
+    borderRadius: 5,
+    backgroundColor: "rgba(220, 226, 237, 0.8)",
     borderWidth: 2,
-    borderColor: "rgba(0, 140, 160, 0.4)",
+    borderColor: "rgba(74, 84, 102, 1)",
     alignItems: "center",
     justifyContent: "center"
   },

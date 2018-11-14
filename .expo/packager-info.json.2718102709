@@ -1,9 +1,9 @@
 {
   "expoServerNgrokUrl": "https://uu-ecg.enes.waves.exp.direct",
   "packagerNgrokUrl": "https://packager.uu-ecg.enes.waves.exp.direct",
-  "ngrokPid": 7464,
-  "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 3220,
+  "ngrokPid": 10512,
+  "expoServerPort": null,
+  "packagerPort": null,
+  "packagerPid": null,
   "devToolsPort": 19002
 }
