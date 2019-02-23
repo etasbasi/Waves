@@ -2,30 +2,19 @@ import React from "react";
 import {
   Image,
   Platform,
-  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
-  Dimensions,
-  Alert,
-  Button
+  View
 } from "react-native";
-import {
-  AppLoading,
-  Asset,
-  Font,
-  Icon,
-  Location,
-  Permissions,
-  Constants
-} from "expo";
-import MapView, {
-  Marker,
-  animateToRegion,
-  Animated,
-  Callout
-} from "react-native-maps";
+import { Location, Permissions, Constants } from "expo";
+import MapView, { Marker, Callout } from "react-native-maps";
+import PropTypes from "prop-types";
+
+import { switchTheme } from "../actions/themeActions";
+
+import Themes from "./../constants/theme-context";
+import { connect } from "react-redux";
 
 const events = [
   {
@@ -45,12 +34,13 @@ const events = [
   }
 ];
 
-export default class HomeScreen extends React.Component {
+class HomeScreen extends React.Component {
   state = {
     latitude: null,
     longitude: null,
     location: null,
-    errorMessage: null
+    errorMessage: null,
+    theme: this.props.theme
   };
 
   static navigationOptions = {
@@ -73,6 +63,11 @@ export default class HomeScreen extends React.Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({ theme: nextProps.theme });
+    this.forceUpdate();
+  }
+
   render() {
     // If the location is still being determined render Fetching Location else render the map
     if (this.state.latitude == null || this.state.longitude == null) {
@@ -82,12 +77,13 @@ export default class HomeScreen extends React.Component {
         </View>
       );
     } else {
+      const theme = this.state.theme == "light" ? Themes.light : Themes.dark;
       return (
         <View style={{ flex: 1 }}>
           <MapView
             ref={ref => (this.mapView = ref)}
             // onPress={e => console.log(e.nativeEvent.coordinate)}
-            customMapStyle={[]}
+            customMapStyle={theme}
             style={{ flex: 1 }}
             provider="google"
             initialRegion={{
@@ -123,6 +119,9 @@ export default class HomeScreen extends React.Component {
               </Marker>
             ))}
           </MapView>
+          <View style={styles.stateView}>
+            <Text>{this.state.theme}</Text>
+          </View>
           <TouchableOpacity
             onPress={this._gotoCurrentLocation}
             style={{
@@ -131,7 +130,7 @@ export default class HomeScreen extends React.Component {
               bottom: 20,
               right: 20,
               position: "absolute",
-              backgroundColor: "#ccc",
+              backgroundColor: "#a3a3a3",
               borderRadius: 10
             }}
           >
@@ -203,7 +202,18 @@ export default class HomeScreen extends React.Component {
     );
   };
 }
+
 const styles = StyleSheet.create({
+  stateView: {
+    position: "absolute",
+    width: 200,
+    height: 100,
+    top: 40,
+    left: 20,
+    backgroundColor: "rgba(100, 100, 100, 0.5)",
+    alignItems: "center",
+    justifyContent: "center"
+  },
   map: {
     flex: 1
   },
@@ -326,3 +336,17 @@ const styles = StyleSheet.create({
     color: "#2e78b7"
   }
 });
+
+const mapStateToProps = state => ({
+  theme: state.theme
+});
+
+HomeScreen.propTypes = {
+  theme: PropTypes.string,
+  swtichTheme: PropTypes.func
+};
+
+export default connect(
+  mapStateToProps,
+  { switchTheme }
+)(HomeScreen);

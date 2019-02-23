@@ -1,6 +1,6 @@
 import React from "react";
 
-export const themes = {
+const themes = {
   dark: [
     {
       elementType: "geometry",
@@ -242,3 +242,5 @@ export const themes = {
     }
   ]
 };
+
+export default themes;

@@ -3,7 +3,12 @@ import { StyleSheet, View, Text } from "react-native";
 import SettingsList from "react-native-settings-list";
 import { ExpoConfigView } from "@expo/samples";
 
-export default class SettingsScreen extends React.Component {
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+
+import { switchTheme } from "../actions/themeActions";
+
+class SettingsScreen extends React.Component {
   static navigationOptions = {
     title: "Settings"
   };
@@ -36,6 +41,7 @@ export default class SettingsScreen extends React.Component {
 
   onValueChange(value) {
     this.setState({ switchValue: value });
+    this.props.switchTheme();
   }
 }
 
@@ -47,3 +53,17 @@ const styles = StyleSheet.create({
     fontSize: 20
   }
 });
+
+SettingsScreen.propTypes = {
+  theme: PropTypes.string.isRequired,
+  switchTheme: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({
+  theme: state.theme
+});
+
+export default connect(
+  mapStateToProps,
+  { switchTheme }
+)(SettingsScreen);
